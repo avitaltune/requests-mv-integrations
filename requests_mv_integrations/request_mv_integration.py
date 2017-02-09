@@ -10,7 +10,6 @@ import logging
 import os
 import time
 from functools import partial
-# from pprintpp import pprint
 
 import requests
 from logging_mv_integrations import (
@@ -489,7 +488,6 @@ class RequestMvIntegration(object):
             raise
 
         except Exception as ex:
-            print_traceback(ex)
 
             raise TuneRequestModuleError(
                 error_message="Request: Exception: Unexpected",
