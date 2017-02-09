@@ -488,6 +488,7 @@ class RequestMvIntegration(object):
             raise
 
         except Exception as ex:
+            print_traceback(ex)
 
             raise TuneRequestModuleError(
                 error_message="Request: Exception: Unexpected",
@@ -951,7 +952,6 @@ class RequestMvIntegration(object):
             response = self.tune_request.request(**kwargs)
 
         except Exception as ex:
-            print_traceback(ex)
 
             self.logger.error(
                 "Send Request: Request Base: Error",
