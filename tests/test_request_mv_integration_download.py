@@ -99,7 +99,7 @@ class TestRequestMvIntegrationDownload:
         csv_as_list = list(
             request_mv_integration_download_object.request_csv_download(
                 request_method='GET',
-                request_url="test_csv_download_url",
+                request_url=test_csv_download_url,
                 tmp_csv_file_name=TMP_CSV_FILE_NAME,
                 tmp_directory=tmpdir,
             )
@@ -126,7 +126,8 @@ class TestRequestMvIntegrationDownload:
                     tmp_directory=tmpdir,
                 )
             )
-            assert "Invalid URLp" in str(info.value)
+            assert "Invalid URL" in str(info.value)
+            assert csv_as_list is None
 
     def test_request_json_download(self, request_mv_integration_download_object, run_server):
         # RequestMvIntegrationDownload.request_json_download(...) should save the content of a response to
