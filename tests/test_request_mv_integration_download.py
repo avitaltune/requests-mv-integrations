@@ -112,6 +112,28 @@ class TestRequestMvIntegrationDownload:
         # Now, check that the content of the list of csv dictionary rows, is correct
         assert (compare_csv_file_to_csv_list(StaticFilesHandler.csv_file_name(), csv_as_list))
 
+
+    def test_request_csv_download_fail(self, request_mv_integration_download_object, run_server):
+        # RequestMvIntegrationDownload.request_csv_download(...) returns a
+        # generator containing CSV data by rows in JSON dictionary format.
+        # Converting the generator to a list, causes yielding all rows values.
+        csv_as_list = list(
+            request_mv_integration_download_object.request_csv_download(
+                request_method='GET',
+                request_url="bad url",
+                tmp_csv_file_name=TMP_CSV_FILE_NAME,
+                tmp_directory=tmpdir,
+            )
+        )
+        # as a side effect, the method saves a csv file in <TMP_DIRECTORY>/<TMP_CSV_FILE_NAME>.
+        # Check, whether the method has yielded the CSV file values correctly ( We mocked an
+        # HTTP GET server to return in the response, the content of a predefined csv file )
+        downloaded_file_path = tmpdir + sep + TMP_CSV_FILE_NAME
+        assert (compare_csv_files(StaticFilesHandler.csv_file_name(), downloaded_file_path))
+
+        # Now, check that the content of the list of csv dictionary rows, is correct
+        assert (compare_csv_file_to_csv_list(StaticFilesHandler.csv_file_name(), csv_as_list))
+
     def test_request_json_download(self, request_mv_integration_download_object, run_server):
         # RequestMvIntegrationDownload.request_json_download(...) should save the content of a response to
         # a GET request to <test_json_download_url>, as a json file at <TMP_DIRECTORY>/<TMP_JSON_FILE_NAME>
