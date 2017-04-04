@@ -11,5 +11,4 @@ from .errors_traceback import (
     get_exception_message,
     print_traceback,
     print_limited_traceback,
-    print_traceback_stack,
 )
